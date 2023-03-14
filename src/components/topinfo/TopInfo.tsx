@@ -1,11 +1,11 @@
-import { Flex, HStack, Image, Stack, Text } from "@chakra-ui/react";
+import { Flex, Grid, HStack, Image, Stack, Text } from "@chakra-ui/react";
 import { useContext, useState } from "react";
 import { useQuery } from "react-query";
 import { getHourlyWeather, getHourlyWeatherByCity } from "../../api";
 import { HourlyWeather } from "../../types/HourlyWeather";
 import { LocationContext } from "../sidebar/LocationContext";
 import { LocationProp } from "../sidebar/Sidebar";
-import { MutatingDots } from 'react-loader-spinner'
+import { MutatingDots } from "react-loader-spinner";
 
 type HourlyProp = {
   day: string;
@@ -20,24 +20,37 @@ const HourlyCard = (prop: HourlyProp) => {
     <Stack
       direction={"column"}
       justifyContent={"space-between"}
-      alignItems={'center'}
+      alignItems={"center"}
       backgroundColor={"white"}
       rounded={"2xl"}
       boxShadow={"sm"}
       p={4}
     >
-      <Text color={'black'} fontSize={'xs'} fontWeight={'medium'}>{prop.day}</Text>
-      <Text color={'gray.500'} fontSize={'xs'} fontWeight={'medium'}>{prop.time}</Text>
-      <Image src={`https://openweathermap.org/img/wn/${prop.icon}@2x.png`} alt={""} />
+      <Text color={"black"} fontSize={"xs"} fontWeight={"medium"}>
+        {prop.day}
+      </Text>
+      <Text color={"gray.500"} fontSize={"xs"} fontWeight={"medium"}>
+        {prop.time}
+      </Text>
+      <Image
+        src={`https://openweathermap.org/img/wn/${prop.icon}@2x.png`}
+        alt={""}
+      />
       <HStack>
-        <Text fontSize={'xs'} color={'black'}>
-        {`${prop.maxTemp}`}<Text textTransform={'none'} as={'sup'}>o</Text>
-        <Text as={'span'}>C</Text>
+        <Text fontSize={"xs"} color={"black"}>
+          {`${prop.maxTemp}`}
+          <Text textTransform={"none"} as={"sup"}>
+            o
+          </Text>
+          <Text as={"span"}>C</Text>
         </Text>
 
-        <Text fontSize={'xs'} color={'gray.500'}>
-        {`${prop.minTemp}`}<Text textTransform={'none'} as={'sup'}>o</Text>
-        <Text as={'span'}>C</Text>
+        <Text fontSize={"xs"} color={"gray.500"}>
+          {`${prop.minTemp}`}
+          <Text textTransform={"none"} as={"sup"}>
+            o
+          </Text>
+          <Text as={"span"}>C</Text>
         </Text>
       </HStack>
     </Stack>
@@ -45,24 +58,34 @@ const HourlyCard = (prop: HourlyProp) => {
 };
 
 const TopInfo = (location: LocationProp) => {
-  const locationType = useContext(LocationContext)
-  console.log(locationType.location)
+  const locationType = useContext(LocationContext);
 
   const [weatherData, setWeatherData] = useState<HourlyWeather>();
   const { data, error, isLoading, isError } = useQuery<HourlyWeather, Error>(
     "hourly_weather",
     async () => getHourlyWeather(location.lat!, location.long!),
-    { enabled: locationType.location?.coord !== null, onSuccess(data) {
-      setWeatherData(data)
-    }, }
+    {
+      enabled: locationType.location?.coord !== null,
+      onSuccess(data) {
+        setWeatherData(data);
+      },
+    }
   );
 
-  const { data: sdata, error: serror, isLoading: sisLoading, isError: sisError } = useQuery<HourlyWeather, Error>(
+  const {
+    data: sdata,
+    error: serror,
+    isLoading: sisLoading,
+    isError: sisError,
+  } = useQuery<HourlyWeather, Error>(
     "hourly_weather",
     async () => getHourlyWeatherByCity(locationType.location?.city!),
-    { enabled: locationType.location?.coord === null, onSuccess(data) {
-      setWeatherData(data)
-    }, }
+    {
+      enabled: locationType.location?.coord === null,
+      onSuccess(data) {
+        setWeatherData(data);
+      },
+    }
   );
 
   var days = ["Sun", "Mon", "Tue", "Wed", "Thur", "Fri", "Sat"];
@@ -91,13 +114,16 @@ const TopInfo = (location: LocationProp) => {
   }
 
   return (
-    <Flex px={14} py={10} flexDirection={"column"}>
+    <Flex
+      px={{base: 7, md: 14}}
+      py={10}
+      flexDirection={"column"}
+    >
       <Text fontWeight={"semibold"} color={"black"}>
         Today - 3 Hour Interval
       </Text>
 
-      <HStack
-        mt={6}>
+      <HStack mt={6} display={{ base: "none", md: "flex" }}>
         {weatherData?.list?.map((d, i) => {
           const hourlyTimestamp = d.dt;
           const date = new Date();
@@ -118,6 +144,33 @@ const TopInfo = (location: LocationProp) => {
           }
         })}
       </HStack>
+
+      <Grid
+        mt={6}
+        templateColumns={"repeat(2, 1fr)"}
+        display={{ base: "grid", md: "none" }}
+        gap={4}
+      >
+        {weatherData?.list?.map((d, i) => {
+          const hourlyTimestamp = d.dt;
+          const date = new Date();
+          date.setTime(hourlyTimestamp * 1000);
+          const day = days[date.getDay()];
+
+          if (i < 6) {
+            return (
+              <HourlyCard
+                key={d.dt}
+                day={day}
+                time={`${date.getHours()}:${date.getMinutes()}`}
+                icon={d.weather[0].icon}
+                maxTemp={d.main.temp_max}
+                minTemp={d.main.temp_min}
+              />
+            );
+          }
+        })}
+      </Grid>
     </Flex>
   );
 };

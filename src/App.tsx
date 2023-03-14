@@ -18,9 +18,9 @@ function App() {
       <LocationContextProvider>
         <WeatherContextProvider>
           {location?.loaded === true && location.status === "SUCCESS" && (
-            <Flex alignItems={"start"}>
+            <Flex alignItems={"start"} flexDirection={{base: 'column', md: 'row'}}>
               <Sidebar lat={location.coord.lat} long={location.coord.long} />
-              <Flex flexDirection={"column"} width={"70%"} bgColor={"gray.100"}>
+              <Flex flexDirection={"column"} width={{base: '100%', md: "70%"}} bgColor={"gray.100"}>
                 <TopInfo lat={location.coord.lat} long={location.coord.long} />
                 <BottomInfo />
               </Flex>

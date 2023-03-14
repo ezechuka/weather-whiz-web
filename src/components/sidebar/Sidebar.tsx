@@ -91,8 +91,8 @@ const Sidebar = (location: LocationProp) => {
         py={10}
         alignItems={"center"}
         justifyContent={"center"}
-        maxWidth={"30%"}
-        height={"100vh"}
+        width={{base: '100%', md: "30%"}}
+        height={"50vh"}
       >
         <MutatingDots
           height="100"
@@ -110,11 +110,11 @@ const Sidebar = (location: LocationProp) => {
   return (
     <Flex
       flexDirection={"column"}
-      px={14}
+      px={{base: 7, md: 14}}
       py={10}
       alignItems={"start"}
       justifyContent={"center"}
-      maxWidth={"30%"}
+      width={{base: '100%', md:"30%"}}
     >
       <HStack>
         <InputGroup justifyContent={"center"}>
@@ -216,7 +216,7 @@ const Sidebar = (location: LocationProp) => {
         mt={4}
         backgroundImage={cityBg}
         backgroundPosition={"center bottom"}
-        backgroundSize={"300px"}
+        backgroundSize={"350px"}
         backgroundRepeat={"no-repeat"}
       >
         <Box
