@@ -1,9 +1,7 @@
 import { Flex } from "@chakra-ui/react";
-import { useContext } from "react";
 import { QueryClient, QueryClientProvider } from "react-query";
 import BottomInfo from "./components/bottominfo/BottomInfo";
 import {
-  LocationContext,
   LocationContextProvider,
 } from "./components/sidebar/LocationContext";
 import Sidebar from "./components/sidebar/Sidebar";
@@ -14,7 +12,6 @@ import useGeolocation from "./hooks/useGeolocation";
 function App() {
   const queryClient = new QueryClient();
   const location = useGeolocation();
-  const locationType = useContext(LocationContext);
 
   return (
     <QueryClientProvider client={queryClient}>
