@@ -114,11 +114,7 @@ const TopInfo = (location: LocationProp) => {
   }
 
   return (
-    <Flex
-      px={{base: 7, md: 14}}
-      py={10}
-      flexDirection={"column"}
-    >
+    <Flex px={{ base: 7, md: 14 }} py={10} flexDirection={"column"}>
       <Text fontWeight={"semibold"} color={"black"}>
         Today - 3 Hour Interval
       </Text>
@@ -135,7 +131,15 @@ const TopInfo = (location: LocationProp) => {
               <HourlyCard
                 key={d.dt}
                 day={day}
-                time={`${date.getHours()}:${date.getMinutes()}`}
+                time={`${date.getHours().toLocaleString("en-US", {
+                  minimumIntegerDigits: 2,
+                  useGrouping: false,
+                })}:${date
+                  .getMinutes()
+                  .toLocaleString("en-US", {
+                    minimumIntegerDigits: 2,
+                    useGrouping: false,
+                  })}`}
                 icon={d.weather[0].icon}
                 maxTemp={d.main.temp_max}
                 minTemp={d.main.temp_min}

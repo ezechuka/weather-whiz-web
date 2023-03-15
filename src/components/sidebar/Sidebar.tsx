@@ -184,7 +184,7 @@ const Sidebar = (location: LocationProp) => {
       <Text fontWeight={"medium"} mt={2}>
         {`${day}, `}
         <Text as={"span"} color={"gray.500"} fontWeight={"normal"}>
-          {`${date.getHours()}:${date.getMinutes()}`}
+          {`${date.getHours().toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false})}:${date.getMinutes().toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false})}`}
         </Text>
       </Text>
 

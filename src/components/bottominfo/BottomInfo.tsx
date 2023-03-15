@@ -54,7 +54,7 @@ const BottomInfo = () => {
         width={"full"}
         mt={6}
         templateColumns={{ base: "repeat(2, 1fr)", md: "repeat(3, 1fr)" }}
-        gap={{base: 3, md: 6}}
+        gap={{ base: 3, md: 6 }}
       >
         <WeatherCard>
           <Stack direction={"column"}>
@@ -62,7 +62,7 @@ const BottomInfo = () => {
               Humidity
             </Text>
 
-            <Text color={"black"} fontSize={{base: '3xl', md: "4xl"}}>
+            <Text color={"black"} fontSize={{ base: "3xl", md: "4xl" }}>
               {weatherData?.main.humidity}
               <Text fontSize={"sm"} as={"span"}>
                 %
@@ -77,7 +77,7 @@ const BottomInfo = () => {
               Visibility
             </Text>
 
-            <Text color={"black"} fontSize={{base: '3xl', md: "4xl"}}>
+            <Text color={"black"} fontSize={{ base: "3xl", md: "4xl" }}>
               {`${weatherData?.visibility! / 1000}`}
               <Text fontSize={"sm"} as={"span"}>
                 km
@@ -92,7 +92,7 @@ const BottomInfo = () => {
               Atmospheric Pressure
             </Text>
 
-            <Text color={"black"} fontSize={{base: '3xl', md: "4xl"}}>
+            <Text color={"black"} fontSize={{ base: "3xl", md: "4xl" }}>
               {`${weatherData?.main.pressure}`}
               <Text fontSize={"sm"} as={"span"}>
                 hPa
@@ -107,7 +107,7 @@ const BottomInfo = () => {
               Wind Status
             </Text>
 
-            <Text color={"black"} fontSize={{base: '3xl', md: "4xl"}}>
+            <Text color={"black"} fontSize={{ base: "3xl", md: "4xl" }}>
               {weatherData?.wind.speed}
               <Text fontSize={"sm"} as={"span"}>
                 m/s
@@ -137,7 +137,7 @@ const BottomInfo = () => {
 
             <HStack alignItems={"center"}>
               <Circle
-                size={{base: "45px", md: '50px'}}
+                size={{ base: "45px", md: "50px" }}
                 bgColor={"yellow.300"}
                 borderColor={"orange.300"}
                 borderWidth={2}
@@ -145,13 +145,19 @@ const BottomInfo = () => {
                 <FiSunrise size={"1.5rem"} color={"black"} />
               </Circle>
               <Text fontSize={"md"} as={"span"} fontWeight={"medium"}>
-                {`${sunriseDate.getHours()}:${sunriseDate.getMinutes()}`}
+                {`${sunriseDate.getHours().toLocaleString("en-US", {
+                  minimumIntegerDigits: 2,
+                  useGrouping: false,
+                })}:${sunriseDate.getMinutes().toLocaleString("en-US", {
+                  minimumIntegerDigits: 2,
+                  useGrouping: false,
+                })}`}
               </Text>
             </HStack>
 
             <HStack alignItems={"center"}>
               <Circle
-                size={{base: "45px", md: '50px'}}
+                size={{ base: "45px", md: "50px" }}
                 bgColor={"yellow.300"}
                 borderColor={"orange.300"}
                 borderWidth={2}
@@ -159,7 +165,15 @@ const BottomInfo = () => {
                 <FiSunset size={"1.5rem"} color={"black"} />
               </Circle>
               <Text fontSize={"md"} as={"span"} fontWeight={"medium"}>
-                {`${sunsetDate.getHours()}:${sunsetDate.getMinutes()}`}
+                {`${sunsetDate.getHours().toLocaleString("en-US", {
+                  minimumIntegerDigits: 2,
+                  useGrouping: false,
+                })}:${sunsetDate
+                  .getMinutes()
+                  .toLocaleString("en-US", {
+                    minimumIntegerDigits: 2,
+                    useGrouping: false,
+                  })}`}
               </Text>
             </HStack>
           </Stack>
@@ -173,7 +187,7 @@ const BottomInfo = () => {
 
             <HStack alignItems={"center"}>
               <Circle
-                size={{base: "45px", md: '50px'}}
+                size={{ base: "45px", md: "50px" }}
                 bgColor={"yellow.300"}
                 borderColor={"orange.300"}
                 borderWidth={2}
@@ -191,7 +205,7 @@ const BottomInfo = () => {
 
             <HStack alignItems={"center"}>
               <Circle
-                size={{base: "45px", md: '50px'}}
+                size={{ base: "45px", md: "50px" }}
                 bgColor={"yellow.300"}
                 borderColor={"orange.300"}
                 borderWidth={2}
